@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { followUser, unFollowUser } from "../../redux/apiCalls";
+import {
+  followUser,
+  getTimeLinePosts,
+  unFollowUser,
+} from "../../redux/apiCalls";
 import { Link } from "react-router-dom";
 
 const User = ({ person }) => {
@@ -12,11 +16,12 @@ const User = ({ person }) => {
   const serverPublic = import.meta.env.VITE_PUBLIC_FOLDER;
   const dispatch = useDispatch();
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     following ?
-      unFollowUser(dispatch, person._id, user, TOKEN)
-    : followUser(dispatch, person._id, user, TOKEN);
+      await unFollowUser(dispatch, person._id, user, TOKEN)
+    : await followUser(dispatch, person._id, user, TOKEN);
     setFollowing((prev) => !prev);
+    await getTimeLinePosts(dispatch, user._id);
   };
 
   return (
