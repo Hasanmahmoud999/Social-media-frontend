@@ -21,7 +21,7 @@ const Posts = () => {
   if (params.id) posts = posts.filter((post) => post.userId === params.id);
   useEffect(() => {
     getTimeLinePosts(dispatch, user._id);
-  }, [posts]);
+  }, []);
   return (
     <div className="posts">
       {isFetching ?
