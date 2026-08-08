@@ -35,7 +35,10 @@ const newPostSlice = createSlice({
       state.isFetching = false;
       state.uploading = false;
       state.error = false;
-      state.posts = [...action.payload];
+      const uniquePosts = Array.from(
+        new Map(action.payload.map((post) => [post._id, post])).values(),
+      );
+      state.posts = uniquePosts;
     },
     retreivingPostFailur: (state) => {
       state.uploading = false;
