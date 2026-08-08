@@ -1,0 +1,53 @@
+@keyframes modalFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profileModale{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(245,245, 245,0.5);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    animation: modalFadeIn 0.3s forwards;
+}
+
+.profileModale.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.profileInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    background-color: white;
+    width: 50%;
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.2);}
+
+.profileInfo>span{
+    display: flex;
+    justify-content: flex-end;
+    color: rgb(177, 177, 177);
+}
+
