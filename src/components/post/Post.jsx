@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Post.css";
 import { useSelector } from "react-redux";
 import { publicRequest } from "../../requestMethods";
+import { format } from "timeago.js";
 
-const Post = ({ data }) => {
+
+
+
+  const serverPublic = import.meta.env.VITE_PUBLIC_FOLDER;
+
+const Post = ({ data,person }) => {
   const user = useSelector((state) => state.users.currentUser);
   const [liked, setLiked] = useState(data.likes?.includes(user._id));
   const [likes, setLikes] = useState(data.likes?.length);
-
+  
+console.log(data)
+console.log(person)
   const handleLike = async () => {
     setLiked(!liked);
     liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1);
@@ -19,10 +27,27 @@ const Post = ({ data }) => {
       console.log(error);
     }
   };
+
+ 
   return (
     <div className="post">
+      <div className="detail">
+        <div>
+          <div>
+          <img src={   person?.profilePicture ?
+                serverPublic + person.profilePicture
+                : serverPublic + "defaultProfile.jpg"} alt="" />
+          </div>
+          <div className="detailInf">
+          <b>{person?.firstname}</b>
+          <span>{format(data.createdAt)}</span>
+          </div>
+
+        </div>
+        <span> {data.desc}</span>
+      </div>
       <img
-        src={data.image ? import.meta.env.VITE_PUBLIC_FOLDER + data.image : ""}
+        src={data.image ? serverPublic + data.image : ""}
         alt=""
       />
 
@@ -47,12 +72,7 @@ const Post = ({ data }) => {
         {likes} likes
       </span>
 
-      <div className="detail">
-        <span>
-          <b>{data.name}</b>
-        </span>
-        <span> {data.desc}</span>
-      </div>
+      
     </div>
   );
 };

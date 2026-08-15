@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Posts.css";
 import { PostsData } from "./../../data/PostsData";
 import Post from "../post/Post";
@@ -13,6 +13,8 @@ import { getTimeLinePosts } from "../../redux/apiCalls";
 import { useParams } from "react-router-dom";
 
 const Posts = () => {
+     const [persons, setPersons] = useState([]);
+      // const [person, setPerson] = useState([]);
   const params = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.currentUser);
@@ -21,7 +23,18 @@ const Posts = () => {
   if (params.id) posts = posts.filter((post) => post.userId === params.id);
   useEffect(() => {
     getTimeLinePosts(dispatch, user._id);
+      const fetchPerson = async () => {
+            const getAllUser = await publicRequest.get("user");
+            setPersons(getAllUser.data);
+            // console.log(getAllUser.data)
+            // setPerson( persons?.find(person=>person._id===data.userId))
+            
+          };
+          fetchPerson();
   }, []);
+
+  console.log(persons)
+  // console.log(person)
   return (
     <div className="posts">
       {isFetching ?
@@ -29,6 +42,7 @@ const Posts = () => {
       : posts.map((post, id) => {
           return (
             <Post
+            person={persons?.find(person=>person._id===post.userId)}
               data={post}
               id={id}
             />
