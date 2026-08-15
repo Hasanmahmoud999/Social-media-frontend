@@ -2,8 +2,6 @@ import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-// const TOKEN=JSON.parse(JSON.parse(localStorage.getItem("persist:root"))?.users)?.currentUser?.token
-// console.log(JSON.parse(JSON.parse(localStorage.getItem("persist:root")).users).currentUser.token)
 
 const getToken = () => {
   const persistRoot = localStorage.getItem("persist:root");
